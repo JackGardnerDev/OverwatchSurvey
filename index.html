@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slide Buttons</title>
+  <style>
+    .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    }
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    .label {
+      margin-right: 10px;
+      text-align: right;
+    }
+    .slide-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .active {
+      background-color: green;
+    }
+    .slide {
+    width: 100px;
+    height: 30px;
+    background-color: gray;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    }
+    .slide:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+    }
+    .slide.active {
+    background-color: green;
+    }
+    .slide.active:before {
+    transform: translateX(70px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="slider-wrapper">
+      <div class="label">I'm mentally stable:</div>
+      <div class="slide-container">
+        <div class="slide" id="slide1"></div>
+      </div>
+    </div>
+    <div class="slider-wrapper">
+      <div class="label">I'm not racist:</div>
+      <div class="slide-container">
+        <div class="slide" id="slide2"></div>
+      </div>
+    </div>
+    <div class="slider-wrapper">
+      <div class="label">I'm good at Overwatch:</div>
+      <div class="slide-container">
+        <div class="slide" id="slide3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var slides = document.getElementsByClassName('slide');
+    var activeSlides = [];
+
+    function activateSlide(slide) {
+      slide.classList.add('active');
+      activeSlides.push(slide);
+      if (activeSlides.length > 2) {
+        var removedSlide = activeSlides.shift();
+        removedSlide.classList.remove('active');
+      }
+    }
+
+    function deactivateSlide(slide) {
+      slide.classList.remove('active');
+      var index = activeSlides.indexOf(slide);
+      if (index > -1) {
+        activeSlides.splice(index, 1);
+      }
+    }
+
+    function toggleSlide(slide) {
+      if (slide.classList.contains('active')) {
+        deactivateSlide(slide);
+      } else {
+        activateSlide(slide);
+      }
+    }
+
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].addEventListener('click', function() {
+        toggleSlide(this);
+      });
+    }
+  </script>
+</body>
+</html>
